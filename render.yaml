@@ -14,16 +14,14 @@ services:
         value: 0.0.0.0
       - key: PORT
         value: 1337
-      # Veritabani — Render PostgreSQL'den otomatik alinir
+      # Veritabani — Render panelinden mevcut PostgreSQL baglanti stringini girin
       - key: DATABASE_CLIENT
         value: postgres
       - key: DATABASE_URL
-        fromDatabase:
-          name: icrik-final-db
-          property: connectionString
+        sync: false
       - key: DATABASE_SSL
         value: true
-      # Strapi secrets — once deploy edin, sonra girin
+      # Strapi secrets — Render panelinden girin
       - key: APP_KEYS
         sync: false
       - key: API_TOKEN_SALT
@@ -39,10 +37,3 @@ services:
       # i18n
       - key: STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE
         value: tr
-
-databases:
-  - name: icrik-final-db
-    databaseName: strapi_icrik
-    user: strapi_user
-    plan: free
-    region: frankfurt
