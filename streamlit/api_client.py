@@ -7,7 +7,7 @@ Strapi 5 degisiklikleri:
 import requests
 from typing import Optional
 
-STRAPI_URL = "http://localhost:1337"
+STRAPI_URL = "https://icrik-final-strapi.onrender.com"
 
 
 def _get(endpoint: str, params: dict = None) -> dict:

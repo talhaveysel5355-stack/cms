@@ -37,3 +37,14 @@ services:
       # i18n
       - key: STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE
         value: tr
+
+  - type: web
+    name: icrik-final-streamlit
+    env: python
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r streamlit/requirements.txt
+    startCommand: streamlit run streamlit/app.py --server.port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
