@@ -41,7 +41,7 @@ class StrapiClient:
             # Token'in calismali oldugunu dogrula
             test_url = f"{self.base_url}/api/animes?pagination[pageSize]=1"
             try:
-                r = requests.get(test_url, headers=self.headers, timeout=10)
+                r = requests.get(test_url, headers=self.headers, timeout=60)
                 if r.status_code == 200:
                     print(f"[Strapi] OK API Token ile dogrulama basarili")
                     return True
@@ -63,7 +63,7 @@ class StrapiClient:
             'password': STRAPI_ADMIN_PASSWORD
         }
         try:
-            response = requests.post(url, json=payload, timeout=15)
+            response = requests.post(url, json=payload, timeout=60)
             response.raise_for_status()
             data = response.json()
             self.token = data.get('jwt')
@@ -137,7 +137,7 @@ class StrapiClient:
         url = f"{self.base_url}/api/animes"
         params = {'pagination[pageSize]': 100, 'fields[0]': 'malId', 'fields[1]': 'title'}
         try:
-            response = requests.get(url, headers=self.headers, params=params, timeout=15)
+            response = requests.get(url, headers=self.headers, params=params, timeout=60)
             response.raise_for_status()
             data = response.json()
             return data.get('data', [])
@@ -185,7 +185,7 @@ class StrapiClient:
             payload['data']['coverImage'] = anime_data['cover_image_id']
 
         try:
-            response = requests.post(url, headers=self.headers, json=payload, timeout=15)
+            response = requests.post(url, headers=self.headers, json=payload, timeout=60)
             response.raise_for_status()
             result = response.json()
             entry = result.get('data', {})
@@ -217,7 +217,7 @@ class StrapiClient:
                 headers=self.headers,
                 json=payload,
                 params={'locale': locale},
-                timeout=15
+                timeout=60
             )
             response.raise_for_status()
             print(f"[Strapi] OK Added {locale} locale for anime ID {document_id}")
@@ -232,7 +232,7 @@ class StrapiClient:
         url = f"{self.base_url}/api/animes/{document_id}"
         payload = {'data': {'publishedAt': 'now'}}
         try:
-            response = requests.put(url, headers=self.headers, json=payload, timeout=15)
+            response = requests.put(url, headers=self.headers, json=payload, timeout=60)
             response.raise_for_status()
             return True
         except requests.RequestException:
@@ -269,7 +269,7 @@ class StrapiClient:
             }
         }
         try:
-            response = requests.post(url, headers=self.headers, json=payload, timeout=15)
+            response = requests.post(url, headers=self.headers, json=payload, timeout=60)
             response.raise_for_status()
             result = response.json()
             entry = result.get('data', {})
