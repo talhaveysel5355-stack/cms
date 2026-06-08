@@ -129,3 +129,18 @@ dist
 build
 .strapi-updater.json
 .strapi-cloud.json
+
+############################
+# Python
+############################
+
+python/venv/
+python/__pycache__/
+python/*.pyc
+python/.env
+streamlit/venv/
+streamlit/__pycache__/
+streamlit/*.pyc
+__pycache__/
+*.pyc
+*.pyo
