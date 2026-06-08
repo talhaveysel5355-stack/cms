@@ -14,7 +14,7 @@ def _get(endpoint: str, params: dict = None) -> dict:
     """Strapi'ye GET istegi yapar ve JSON doner."""
     url = f"{STRAPI_URL}/api/{endpoint}"
     try:
-        response = requests.get(url, params=params or {}, timeout=10)
+        response = requests.get(url, params=params or {}, timeout=60)
         response.raise_for_status()
         return response.json()
     except requests.ConnectionError:

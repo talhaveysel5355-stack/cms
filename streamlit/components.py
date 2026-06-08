@@ -255,22 +255,18 @@ def recommendation_card(rec: dict, locale: str = "tr", key_prefix: str = "") -> 
 
 def connection_error_banner(locale: str = "tr"):
     """Show a styled error banner when Strapi is unreachable."""
-    messages = {
-        "tr": (
-            "⚠️ Strapi'ye bağlanılamıyor",
-            "Lütfen Strapi'nin çalıştığından emin olun: `npm run dev` (port 1337)",
-            "Veri görüntülemek için önce Python scriptini çalıştırın: `python main.py`",
-        ),
-        "en": (
-            "⚠️ Cannot connect to Strapi",
-            "Make sure Strapi is running: `npm run dev` (port 1337)",
-            "Run the Python script first to populate data: `python main.py`",
-        ),
-    }
-    title, msg1, msg2 = messages.get(locale, messages["en"])
-    st.error(title)
-    st.info(msg1)
-    st.warning(msg2)
+    if locale == "tr":
+        st.error(
+            "⚠️ **Strapi'ye bağlanılamıyor**\n\n"
+            "Render ücretsiz sunucusu **uyku moduna** geçmiş olabilir. Sunucunun uyanması ~50 saniye sürebilir, lütfen sayfayı yenileyin.\n\n"
+            "Eğer veri yoksa Python scriptini çalıştırarak veri ekleyin: `python main.py`"
+        )
+    else:
+        st.error(
+            "⚠️ **Cannot connect to Strapi**\n\n"
+            "The Render free tier server might be **asleep**. It can take ~50 seconds to wake up, please refresh the page.\n\n"
+            "If it's empty, run the Python script to fetch data: `python main.py`"
+        )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
