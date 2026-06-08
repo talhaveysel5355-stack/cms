@@ -1,0 +1,122 @@
+{
+  "kind": "collectionType",
+  "collectionName": "animes",
+  "info": {
+    "singularName": "anime",
+    "pluralName": "animes",
+    "displayName": "Anime",
+    "description": "Anime collection with multilingual support"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "originalTitle": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "maxLength": 255
+    },
+    "synopsis": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "richtext"
+    },
+    "genre": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "enumeration",
+      "enum": [
+        "Action",
+        "Adventure",
+        "Comedy",
+        "Drama",
+        "Fantasy",
+        "Horror",
+        "Mecha",
+        "Mystery",
+        "Romance",
+        "Sci-Fi",
+        "Slice of Life",
+        "Sports",
+        "Supernatural",
+        "Thriller"
+      ]
+    },
+    "studio": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "maxLength": 255
+    },
+    "releaseYear": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "integer",
+      "min": 1917,
+      "max": 2100
+    },
+    "rating": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "decimal",
+      "min": 0,
+      "max": 10
+    },
+    "coverImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "malId": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "integer",
+      "unique": true
+    },
+    "recommendations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recommendation.recommendation",
+      "mappedBy": "anime"
+    }
+  }
+}

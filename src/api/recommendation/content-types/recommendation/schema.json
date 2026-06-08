@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recommendations",
+  "info": {
+    "singularName": "recommendation",
+    "pluralName": "recommendations",
+    "displayName": "Recommendation",
+    "description": "AI-generated anime recommendations with multilingual support"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "recommendationReason": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text",
+      "required": true
+    },
+    "similarityScore": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "decimal",
+      "min": 0,
+      "max": 1
+    },
+    "anime": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::anime.anime",
+      "inversedBy": "recommendations"
+    },
+    "recommendedAnime": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::anime.anime"
+    }
+  }
+}

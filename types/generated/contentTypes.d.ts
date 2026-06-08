@@ -440,6 +440,245 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAnimeAnime extends Struct.CollectionTypeSchema {
+  collectionName: 'animes';
+  info: {
+    description: 'Anime collection with multilingual support';
+    displayName: 'Anime';
+    pluralName: 'animes';
+    singularName: 'anime';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    coverImage: Schema.Attribute.Media<'images'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    genre: Schema.Attribute.Enumeration<
+      [
+        'Action',
+        'Adventure',
+        'Comedy',
+        'Drama',
+        'Fantasy',
+        'Horror',
+        'Mecha',
+        'Mystery',
+        'Romance',
+        'Sci-Fi',
+        'Slice of Life',
+        'Sports',
+        'Supernatural',
+        'Thriller',
+      ]
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::anime.anime'>;
+    malId: Schema.Attribute.Integer &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    originalTitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 0;
+        },
+        number
+      >;
+    recommendations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recommendation.recommendation'
+    >;
+    releaseYear: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 2100;
+          min: 1917;
+        },
+        number
+      >;
+    studio: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    synopsis: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHakkimizdaHakkimizda extends Struct.SingleTypeSchema {
+  collectionName: 'hakkimizdas';
+  info: {
+    displayName: 'Hakkimizda';
+    pluralName: 'hakkimizdas';
+    singularName: 'hakkimizda';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Baslik: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hakkimizda.hakkimizda'
+    > &
+      Schema.Attribute.Private;
+    Misyonumuz: Schema.Attribute.Text;
+    Ofis: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Vizyonumuz: Schema.Attribute.Text;
+  };
+}
+
+export interface ApiRecommendationRecommendation
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'recommendations';
+  info: {
+    description: 'AI-generated anime recommendations with multilingual support';
+    displayName: 'Recommendation';
+    pluralName: 'recommendations';
+    singularName: 'recommendation';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    anime: Schema.Attribute.Relation<'manyToOne', 'api::anime.anime'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recommendation.recommendation'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    recommendationReason: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    recommendedAnime: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::anime.anime'
+    >;
+    similarityScore: Schema.Attribute.Decimal &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0;
+        },
+        number
+      >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiYaziYazi extends Struct.CollectionTypeSchema {
+  collectionName: 'yazis';
+  info: {
+    displayName: 'Yazi';
+    pluralName: 'yazis';
+    singularName: 'yazi';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Baslik: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Icerik: Schema.Attribute.Blocks;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::yazi.yazi'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -951,6 +1190,10 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::anime.anime': ApiAnimeAnime;
+      'api::hakkimizda.hakkimizda': ApiHakkimizdaHakkimizda;
+      'api::recommendation.recommendation': ApiRecommendationRecommendation;
+      'api::yazi.yazi': ApiYaziYazi;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

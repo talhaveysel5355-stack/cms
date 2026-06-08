@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "yazis",
+  "info": {
+    "singularName": "yazi",
+    "pluralName": "yazis",
+    "displayName": "Yazi"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Baslik": {
+      "type": "string"
+    },
+    "Icerik": {
+      "type": "blocks"
+    }
+  }
+}
