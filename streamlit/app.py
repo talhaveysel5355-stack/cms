@@ -665,7 +665,7 @@ if st.session_state.view == "list":
                     key_prefix=f"row{row_start}",
                 )
                 if clicked:
-                    entry_id = anime_entry.get("id") or anime_entry.get("documentId")
+                    entry_id = anime_entry.get("documentId") or anime_entry.get("id")
                     st.session_state.selected_anime_id = str(entry_id)
                     st.session_state.view = "detail"
                     st.rerun()

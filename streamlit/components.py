@@ -166,7 +166,7 @@ def anime_card(anime: dict, locale: str = "tr", key_prefix: str = "") -> bool:
         )
 
         # Detail button
-        entry_id = anime.get("id") or anime.get("documentId")
+        entry_id = anime.get("documentId") or anime.get("id")
         btn_key = f"{key_prefix}_detail_{entry_id}"
         if st.button(lbl("detail", locale), key=btn_key, use_container_width=True):
             clicked = True
@@ -241,7 +241,7 @@ def recommendation_card(rec: dict, locale: str = "tr", key_prefix: str = "") -> 
                 """,
                 unsafe_allow_html=True,
             )
-            rec_id = rec_anime.get("id") or rec_anime.get("documentId")
+            rec_id = rec_anime.get("documentId") or rec_anime.get("id")
             if st.button(lbl("detail", locale), key=f"{key_prefix}_rec_{rec_id}", use_container_width=True):
                 clicked_id = str(rec_id)
 
