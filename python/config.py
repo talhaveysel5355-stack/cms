@@ -13,9 +13,9 @@ STRAPI_ADMIN_EMAIL = os.getenv('STRAPI_ADMIN_EMAIL', '')
 STRAPI_ADMIN_PASSWORD = os.getenv('STRAPI_ADMIN_PASSWORD', '')
 STRAPI_API_TOKEN = os.getenv('STRAPI_API_TOKEN', '')
 
-# OpenAI
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
-OPENAI_MODEL = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')
+# Groq
+GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
+GROQ_MODEL = os.getenv('GROQ_MODEL', 'llama3-8b-8192')
 
 # Anime settings
 ANIME_FETCH_LIMIT = int(os.getenv('ANIME_FETCH_LIMIT', '20'))

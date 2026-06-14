@@ -1,23 +1,23 @@
-﻿"""
+"""
 ai_enricher.py — AI-powered content enrichment
 Uses OpenAI for text generation and deep-translator for translation
 """
 import time
 from deep_translator import GoogleTranslator
-from config import OPENAI_API_KEY, OPENAI_MODEL
+from config import GROQ_API_KEY, GROQ_MODEL
 
-# OpenAI client — lazily initialized only when API key is available
-_openai_client = None
+# Groq client — lazily initialized only when API key is available
+_groq_client = None
 
 def _get_client():
-    """Return a cached OpenAI client, or None if no API key is configured."""
-    global _openai_client
-    if _openai_client is None:
-        if not OPENAI_API_KEY:
+    """Return a cached Groq client, or None if no API key is configured."""
+    global _groq_client
+    if _groq_client is None:
+        if not GROQ_API_KEY:
             return None
-        from openai import OpenAI
-        _openai_client = OpenAI(api_key=OPENAI_API_KEY)
-    return _openai_client
+        from groq import Groq
+        _groq_client = Groq(api_key=GROQ_API_KEY)
+    return _groq_client
 
 
 def translate_to_turkish(text: str) -> str:
@@ -51,7 +51,7 @@ def expand_synopsis(title: str, synopsis: str, language: str = 'tr') -> str:
     """
     client = _get_client()
     if not client:
-        print("[AI] OpenAI anahtarı yok — orijinal özet kullanılıyor.")
+        print("[AI] Groq anahtarı yok — orijinal özet kullanılıyor.")
         return synopsis
 
     lang_instruction = "in Turkish" if language == 'tr' else "in English"
@@ -69,7 +69,7 @@ Write only the expanded synopsis, no headers or labels. Keep it engaging and spo
 
     try:
         response = client.chat.completions.create(
-            model=OPENAI_MODEL,
+            model=GROQ_MODEL,
             messages=[
                 {"role": "system", "content": "You are an expert anime content writer who creates detailed, engaging anime descriptions."},
                 {"role": "user", "content": prompt}
@@ -81,7 +81,7 @@ Write only the expanded synopsis, no headers or labels. Keep it engaging and spo
         print(f"[AI] OK Expanded synopsis for '{title}' ({len(expanded)} chars)")
         return expanded
     except Exception as e:
-        print(f"[AI] OpenAI error for '{title}': {e}")
+        print(f"[AI] Groq error for '{title}': {e}")
         return synopsis
 
 
@@ -115,7 +115,7 @@ Write only the recommendation sentence, nothing else."""
 
     try:
         response = client.chat.completions.create(
-            model=OPENAI_MODEL,
+            model=GROQ_MODEL,
             messages=[
                 {"role": "system", "content": "You are an anime recommendation expert who creates concise, insightful recommendation explanations."},
                 {"role": "user", "content": prompt}
