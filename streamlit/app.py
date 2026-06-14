@@ -762,6 +762,20 @@ elif st.session_state.view == "detail":
         synopsis_clean = synopsis.replace("\n", "<br>") if synopsis else lbl("no_synopsis", locale)
         st.markdown(f'<div class="synopsis-box">{synopsis_clean}</div>', unsafe_allow_html=True)
 
+        # AI Review
+        ai_review = anime.get("aiReview")
+        if ai_review:
+            ai_review_title = "🤖 Yapay Zeka Yorumu" if locale == "tr" else "🤖 AI Review"
+            st.markdown(
+                f'<div class="section-header">{ai_review_title}</div>',
+                unsafe_allow_html=True,
+            )
+            ai_review_clean = ai_review.replace("\n", "<br>")
+            st.markdown(
+                f'<div class="synopsis-box" style="border-left-color: #e040fb; background: rgba(224, 64, 251, 0.05);">{ai_review_clean}</div>',
+                unsafe_allow_html=True
+            )
+
     st.markdown('</div>', unsafe_allow_html=True)
 
     # ── Recommendations Section ──

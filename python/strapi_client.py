@@ -177,6 +177,7 @@ class StrapiClient:
                 'releaseYear': anime_data.get('release_year'),
                 'rating': anime_data.get('rating'),
                 'malId': anime_data.get('mal_id'),
+                'aiReview': anime_data.get('ai_review', ''),
                 'locale': locale,
             }
         }
@@ -209,6 +210,7 @@ class StrapiClient:
             'data': {
                 'title': locale_data.get('title', ''),
                 'synopsis': locale_data.get('synopsis', ''),
+                'aiReview': locale_data.get('ai_review', ''),
             }
         }
         try:

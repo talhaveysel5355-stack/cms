@@ -117,6 +117,14 @@
       "relation": "oneToMany",
       "target": "api::recommendation.recommendation",
       "mappedBy": "anime"
+    },
+    "aiReview": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "richtext"
     }
   }
 }

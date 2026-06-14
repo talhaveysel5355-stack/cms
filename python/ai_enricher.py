@@ -144,3 +144,38 @@ def compute_similarity_score(genres_a: list, genres_b: list) -> float:
     intersection = len(set_a & set_b)
     union = len(set_a | set_b)
     return round(intersection / union, 2) if union > 0 else 0.0
+
+
+def generate_ai_review(title: str, synopsis: str, language: str = 'tr') -> str:
+    """
+    Generate a short AI review/commentary about the anime.
+    """
+    client = _get_client()
+    if not client:
+        return ""
+
+    lang_instruction = "in Turkish" if language == 'tr' else "in English"
+    
+    prompt = f"""You are a passionate anime critic. Based on the following anime title and synopsis, write a short, engaging review (max 2 paragraphs) {lang_instruction} giving an 'AI Opinion' on why this anime is worth watching.
+
+Anime Title: {title}
+Synopsis: {synopsis}
+
+Write only the review, no headers."""
+
+    try:
+        response = client.chat.completions.create(
+            model=GROQ_MODEL,
+            messages=[
+                {"role": "system", "content": "You are an anime critic who writes insightful and enthusiastic reviews."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=300,
+            temperature=0.7
+        )
+        review = response.choices[0].message.content.strip()
+        print(f"[AI] OK Generated review for '{title}'")
+        return review
+    except Exception as e:
+        print(f"[AI] Groq review error for '{title}': {e}")
+        return ""

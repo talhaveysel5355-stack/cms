@@ -457,6 +457,12 @@ export interface ApiAnimeAnime extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    aiReview: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     coverImage: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

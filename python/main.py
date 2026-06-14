@@ -1,4 +1,4 @@
-﻿"""
+"""
 main.py — Orchestrator for the Anime Recommendation Automation Engine
 
 Pipeline:
@@ -35,7 +35,7 @@ from jikan_client import fetch_top_anime
 from ai_enricher import (
     translate_to_turkish, translate_to_english,
     expand_synopsis, generate_recommendation_reason,
-    compute_similarity_score
+    compute_similarity_score, generate_ai_review
 )
 from image_generator import generate_anime_poster, download_image_from_url
 from strapi_client import StrapiClient
@@ -74,6 +74,8 @@ def process_anime(anime: dict, strapi: StrapiClient, args, existing_ids: set) ->
     original_synopsis = anime.get('synopsis', '')
     synopsis_tr = original_synopsis  # Jikan provides English — translate to Turkish
     synopsis_en = original_synopsis
+    ai_review_tr = ""
+    ai_review_en = ""
 
     if not args.skip_ai and original_synopsis:
         # Translate English -> Turkish
@@ -82,6 +84,9 @@ def process_anime(anime: dict, strapi: StrapiClient, args, existing_ids: set) ->
         synopsis_tr = expand_synopsis(title, synopsis_tr, language='tr')
         # Expand English synopsis with AI
         synopsis_en = expand_synopsis(title, original_synopsis, language='en')
+        # Generate AI Review
+        ai_review_tr = generate_ai_review(title, synopsis_tr, language='tr')
+        ai_review_en = generate_ai_review(title, synopsis_en, language='en')
     elif original_synopsis:
         synopsis_tr = translate_to_turkish(original_synopsis)
 
@@ -113,6 +118,7 @@ def process_anime(anime: dict, strapi: StrapiClient, args, existing_ids: set) ->
     anime_entry_data = {
         **anime,
         'synopsis': synopsis_tr,
+        'ai_review': ai_review_tr,
         'cover_image_id': cover_image_id or ai_poster_id,
     }
 
@@ -124,7 +130,7 @@ def process_anime(anime: dict, strapi: StrapiClient, args, existing_ids: set) ->
             # Add English locale
             strapi.add_locale_to_anime(
                 strapi_id,
-                {'title': title, 'synopsis': synopsis_en},
+                {'title': title, 'synopsis': synopsis_en, 'ai_review': ai_review_en},
                 locale='en'
             )
             # Publish the entry
