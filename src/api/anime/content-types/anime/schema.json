@@ -109,8 +109,7 @@
           "localized": false
         }
       },
-      "type": "integer",
-      "unique": true
+      "type": "integer"
     },
     "recommendations": {
       "type": "relation",

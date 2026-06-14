@@ -493,7 +493,6 @@ export interface ApiAnimeAnime extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::anime.anime'>;
     malId: Schema.Attribute.Integer &
-      Schema.Attribute.Unique &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: false;
