@@ -100,6 +100,14 @@ def fetch_anime_detail(document_id: str, locale: str = "tr") -> dict:
     # Yayinlanmamissa draft olarak dene
     if "error" not in result and not result.get("data"):
         result = _get(f"animes/{document_id}", params)
+        
+    # Eger secili dilde veri yoksa (404) ve tr degilse, tr diline geri don (fallback)
+    if ("error" in result or not result.get("data")) and locale != "tr":
+        params["locale"] = "tr"
+        result = _get(f"animes/{document_id}", {**params, "status": "published"})
+        if "error" not in result and not result.get("data"):
+            result = _get(f"animes/{document_id}", params)
+
     return result
 
 
