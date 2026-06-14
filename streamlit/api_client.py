@@ -36,7 +36,7 @@ def fetch_anime_list(
     max_rating: float = 10.0,
     search: Optional[str] = None,
     page: int = 1,
-    page_size: int = 20,
+    page_size: int = 100,
 ) -> dict:
     """
     Strapi'den anime listesini getirir.

@@ -3,6 +3,7 @@ ai_enricher.py — AI-powered content enrichment
 Uses OpenAI for text generation and deep-translator for translation
 """
 import time
+# pyrefly: ignore [missing-import]
 from deep_translator import GoogleTranslator
 from config import GROQ_API_KEY, GROQ_MODEL
 
@@ -15,6 +16,7 @@ def _get_client():
     if _groq_client is None:
         if not GROQ_API_KEY:
             return None
+        # pyrefly: ignore [missing-import]
         from groq import Groq
         _groq_client = Groq(api_key=GROQ_API_KEY)
     return _groq_client

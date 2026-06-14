@@ -15,7 +15,7 @@ STRAPI_API_TOKEN = os.getenv('STRAPI_API_TOKEN', '')
 
 # Groq
 GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
-GROQ_MODEL = os.getenv('GROQ_MODEL', 'llama3-8b-8192')
+GROQ_MODEL = os.getenv('GROQ_MODEL', 'llama-3.1-8b-instant')
 
 # Anime settings
 ANIME_FETCH_LIMIT = int(os.getenv('ANIME_FETCH_LIMIT', '20'))

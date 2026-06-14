@@ -1,4 +1,4 @@
-﻿"""
+"""
 image_generator.py — Generate anime-style promotional posters using Pollinations AI
 Pollinations AI is a free, no-key-required image generation service.
 Docs: https://pollinations.ai/
@@ -31,7 +31,7 @@ def generate_anime_poster(title: str, genres: list, width: int = 768, height: in
     )
     
     encoded_prompt = urllib.parse.quote(prompt)
-    url = f"{POLLINATIONS_URL}{encoded_prompt}?width={width}&height={height}&nologo=true&seed={hash(title) % 9999}"
+    url = f"{POLLINATIONS_URL}{encoded_prompt}?width={width}&height={height}&seed={hash(title) % 9999}"
     
     print(f"[Image] Generating poster for '{title}'...")
     
